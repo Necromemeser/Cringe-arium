@@ -8,3 +8,12 @@ a[highlight] {
     font-weight: bold;
     text-decoration: underline;
 }
+a {
+    color: #005FDB;
+}
+h1 {
+    color: #005FDB;
+}
+html {
+    --lumo-primary-color: #005FDB;
+}

@@ -3,8 +3,8 @@ INSERT INTO "statuses_table" VALUES
 (2, 1, 'Выпущен'),
 (3, 1, 'Отчислен');
 INSERT INTO "groups_table" VALUES
-(4, 1, 'Английский'),
-(5, 1, 'Французский');
+(4, 1, 'Эльфийский'),
+(5, 1, 'Язык фактов');
 INSERT INTO "contacts_table" VALUES
 (6, 1, 'vdora@mail.ru', 'Вольдемар', 'Дора', 4, 1),
 (7, 1, 'vlad@mail.ru', 'Влад', 'Цепеш', 5, 1),

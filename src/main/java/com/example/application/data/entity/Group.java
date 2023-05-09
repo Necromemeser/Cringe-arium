@@ -26,6 +26,12 @@ public class Group extends AbstractEntity {
     @Formula("(select count(c.id) from contacts_table c where c.group_id = id)")
     private int studentsCount;
 
+    public Group(){}
+
+    public Group(String name) {
+        this.name = name;
+    }
+
     public String getName() {
         return name;
     }

@@ -48,7 +48,8 @@ public class MainLayout extends AppLayout {
     private void createDrawer() {
         addToDrawer(new VerticalLayout(
 //                new RouterLink("Студенты", ListView.class),
-                new RouterLink("Главная", DashboardView.class)
+                new RouterLink("Главная", DashboardView.class),
+                new RouterLink("Профиль", ProfileView.class)
         ));
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         if (auth != null && auth.getAuthorities().stream().anyMatch(a -> a.getAuthority().equals("ROLE_ADMIN"))) {

@@ -8,6 +8,7 @@ import com.vaadin.flow.component.charts.Chart;
 import com.vaadin.flow.component.charts.model.ChartType;
 import com.vaadin.flow.component.charts.model.DataSeries;
 import com.vaadin.flow.component.charts.model.DataSeriesItem;
+import com.vaadin.flow.component.cookieconsent.CookieConsent;
 import com.vaadin.flow.component.html.*;
 import com.vaadin.flow.component.icon.Icon;
 import com.vaadin.flow.component.icon.VaadinIcon;
@@ -23,6 +24,8 @@ import jakarta.annotation.security.PermitAll;
 @PageTitle("Реклама!")
 public class DashboardView extends VerticalLayout {
     private final CrmService service;
+
+
 
     public DashboardView(CrmService service) { // <2>
         this.service = service;
@@ -44,10 +47,9 @@ public class DashboardView extends VerticalLayout {
         header.setWidthFull();
         Div contentDiv = new Div();
         contentDiv.setText(
-                "This is a template for a simple marketing or informational "
-                        + "website. It includes three supporting pieces of "
-                        + "content. Use it as a starting point to create "
-                        + "something more unique.");
+                "Лучшая школа рофляных языков на просторах " +
+                "всего Интернета. Не стесняйтесь - присоединяйтесь! " +
+                "Пожажуста, мне нужны деньги fr...");
         Button button = new Button("Кнопка тут для прикола",
                 new Icon(VaadinIcon.ANGLE_DOUBLE_RIGHT));
         button.addThemeVariants(ButtonVariant.LUMO_PRIMARY);
@@ -62,22 +64,58 @@ public class DashboardView extends VerticalLayout {
         container.getStyle().set("padding-left", "20%");
         container.getStyle().set("padding-right", "20%");
 
-        String cardHeader = "Heading";
-        String cardContent = "Donec id elit non mi porta gravida at eget"
-                + " metus. Fusce dapibus, tellus ac cursus commodo, tortor"
-                + " mauris condimentum nibh, ut fermentum massa justo sit amet "
-                + "risus. Etiam porta sem malesuada magna mollis  euismod. "
-                + "Donec sed odio dui.";
+        String firstCardHeader = "Курс языка фактов";
+        String firstCardContent = "Хотите научиться нестандартно орать? Тогда этот курс для вас! " +
+                "По окончании обучения you'll be spitting fax. Как говорит наш преподаватель - " +
+                "Да не умер я в конце курса!";
 
-        Component card1 = createCard(cardHeader, cardContent);
-        Component card2 = createCard(cardHeader, cardContent);
+        String secondCardHeader = "Курс эльфийского языка";
+        String secondCardContent = "Прежде чем записаться на этот курс, ответьте всего лишь на 3 вопроса "
+                + "от нашего преподавателя:" +
+                " 1) What country u from?" +
+                " 2) They speak elvish there?" +
+                " 3) Elvish, bloede dhoine, do u speak it?!";
+
+
+        Component card1 = createCard(firstCardHeader, firstCardContent);
+        Component card2 = createCard(secondCardHeader, secondCardContent);
 //        Component card3 = createCard(cardHeader, cardContent);
 
-        container.add(card1, card2);
+        Image gosling = new Image("images/Gosling.jpg", "Тут должен был быть Райан...");
+        gosling.setWidth("250px");
+        gosling.setHeight("250px");
 
+        Image samuel = new Image("images/Elvish.png", "Тут должен был быть Сэмюэль...");
+        samuel.setWidth("250px");
+        samuel.setHeight("250px");
+
+        VerticalLayout subcontainer1 = new VerticalLayout();
+        subcontainer1.add(card1, gosling);
+        VerticalLayout subcontainer2 = new VerticalLayout();
+        subcontainer2.add(card2, samuel);
+//        container.add(subcontainer1, subcontainer2);
+        container.add(card1, gosling, card2, samuel);
+        container.setAlignItems(Alignment.CENTER);
+
+//        add(gosling);
         addClassName("dashboard-view");
         setDefaultHorizontalComponentAlignment(Alignment.CENTER);
-        add(layout, container, getContactStats(), getCompaniesChart());
+
+
+        CookieConsent cookieConsent = new CookieConsent();
+        cookieConsent.setMessage(
+                "Мы тут используем куки. Смирись.");
+        cookieConsent.setDismissLabel("Пон");
+        cookieConsent.setLearnMoreLabel("Рид мор");
+        cookieConsent.setLearnMoreLink("https://www.youtube.com/watch?v=dQw4w9WgXcQ&ab_channel=RickAstley");
+
+        //cookieConsent.getStyle().set();
+//        add();
+
+
+        add(layout, container,
+                //gosling, samuel,
+                getContactStats(), getCompaniesChart(), cookieConsent);
         // old
 
          // <3>
@@ -112,12 +150,13 @@ public class DashboardView extends VerticalLayout {
         Div content = new Div();
         content.setText(cardContent);
 
-        Button button = new Button("View details",
-                new Icon(VaadinIcon.ANGLE_DOUBLE_RIGHT));
-        button.addThemeVariants(ButtonVariant.LUMO_SMALL);
+//        Button button = new Button("View details",
+//                new Icon(VaadinIcon.ANGLE_DOUBLE_RIGHT));
+//        button.addThemeVariants(ButtonVariant.LUMO_SMALL);
 
         layout.getElement().getStyle().set("flex-grow", "1");
-        layout.add(header, content, button);
+        layout.getElement().getStyle().set("margin", "10px");
+        layout.add(header, content);//, button);
         return layout;
     }
 }

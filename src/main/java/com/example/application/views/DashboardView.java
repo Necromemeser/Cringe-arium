@@ -29,7 +29,6 @@ public class DashboardView extends VerticalLayout {
 
     public DashboardView(CrmService service) { // <2>
         this.service = service;
-//        setSizeFull();
         setSpacing(true);
         setPadding(true);
 
@@ -56,7 +55,6 @@ public class DashboardView extends VerticalLayout {
 
         layout.add(header, contentDiv, button);
 
-        // This HorizontalLayout contains box1, box2 and box3.
         HorizontalLayout container = new HorizontalLayout();
         container.setSpacing(false);
         container.getStyle().set("flex-wrap", "wrap");
@@ -93,11 +91,9 @@ public class DashboardView extends VerticalLayout {
         subcontainer1.add(card1, gosling);
         VerticalLayout subcontainer2 = new VerticalLayout();
         subcontainer2.add(card2, samuel);
-//        container.add(subcontainer1, subcontainer2);
         container.add(card1, gosling, card2, samuel);
         container.setAlignItems(Alignment.CENTER);
 
-//        add(gosling);
         addClassName("dashboard-view");
         setDefaultHorizontalComponentAlignment(Alignment.CENTER);
 
@@ -109,18 +105,10 @@ public class DashboardView extends VerticalLayout {
         cookieConsent.setLearnMoreLabel("Рид мор");
         cookieConsent.setLearnMoreLink("https://www.youtube.com/watch?v=dQw4w9WgXcQ&ab_channel=RickAstley");
 
-        //cookieConsent.getStyle().set();
-//        add();
-
 
         add(layout, container,
-                //gosling, samuel,
                 getContactStats(), getCompaniesChart(), cookieConsent);
-        // old
 
-         // <3>
-
-//        add(getContactStats(), getCompaniesChart());
     }
 
     private Component getContactStats() {
@@ -150,13 +138,10 @@ public class DashboardView extends VerticalLayout {
         Div content = new Div();
         content.setText(cardContent);
 
-//        Button button = new Button("View details",
-//                new Icon(VaadinIcon.ANGLE_DOUBLE_RIGHT));
-//        button.addThemeVariants(ButtonVariant.LUMO_SMALL);
 
         layout.getElement().getStyle().set("flex-grow", "1");
         layout.getElement().getStyle().set("margin", "10px");
-        layout.add(header, content);//, button);
+        layout.add(header, content);
         return layout;
     }
 }

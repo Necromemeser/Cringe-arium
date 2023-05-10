@@ -24,9 +24,9 @@ public class ContactFormTest {
     public void setupData() {
         groups = new ArrayList<>();
         group1 = new Group();
-        group1.setName("Vaadin Ltd");
+        group1.setName("Эльфийский");
         group2 = new Group();
-        group2.setName("IT Mill");
+        group2.setName("Язык фактов");
         groups.add(group1);
         groups.add(group2);
 
@@ -39,9 +39,9 @@ public class ContactFormTest {
         statuses.add(status2);
 
         marcUsher = new Contact();
-        marcUsher.setFirstName("Marc");
-        marcUsher.setLastName("Usher");
-        marcUsher.setEmail("marc@usher.com");
+        marcUsher.setFirstName("Тайлер");
+        marcUsher.setLastName("Дерден");
+        marcUsher.setEmail("fight@club.com");
         marcUsher.setStatus(status1);
         marcUsher.setGroup(group2);
     }
@@ -50,13 +50,12 @@ public class ContactFormTest {
     public void formFieldsPopulated() {
         ContactForm form = new ContactForm(groups, statuses);
         form.setContact(marcUsher);
-        assertEquals("Marc", form.firstName.getValue());
-        assertEquals("Usher", form.lastName.getValue());
-        assertEquals("marc@usher.com", form.email.getValue());
+        assertEquals("Тайлер", form.firstName.getValue());
+        assertEquals("Дерден", form.lastName.getValue());
+        assertEquals("fight@club.com", form.email.getValue());
         assertEquals(group2, form.group.getValue());
         assertEquals(status1, form.status.getValue());
     }
-
     @Test
     public void saveEventHasCorrectValues() {
         ContactForm form = new ContactForm(groups, statuses);
@@ -67,14 +66,12 @@ public class ContactFormTest {
         form.group.setValue(group1);
         form.email.setValue("john@doe.com");
         form.status.setValue(status2);
-
         AtomicReference<Contact> savedContactRef = new AtomicReference<>(null);
         form.addSaveListener(e -> {
             savedContactRef.set(e.getContact());
         });
         form.save.click();
         Contact savedContact = savedContactRef.get();
-
         assertEquals("John", savedContact.getFirstName());
         assertEquals("Doe", savedContact.getLastName());
         assertEquals("john@doe.com", savedContact.getEmail());

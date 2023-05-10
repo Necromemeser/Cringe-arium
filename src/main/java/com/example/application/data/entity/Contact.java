@@ -20,17 +20,11 @@ public class Contact extends AbstractEntity {
     @Column(name = "last_name")
     private String lastName = "";
 
-    @NotEmpty
-    @Column(name = "password")
-    private String password = "";
-
     @ManyToOne
     @JoinColumn(name = "group_id")
-//    @NotNull
     @JsonIgnoreProperties({"students"})
     private Group group;
 
-//    @NotNull
     @ManyToOne
     private Status status;
 
@@ -39,15 +33,6 @@ public class Contact extends AbstractEntity {
     @Column(name = "email")
     private String email = "";
 
-//    public Contact(String firstName, String lastName, String email, String password, Role role){
-//        this.firstName = firstName;
-//        this.lastName = lastName;
-//        this.email = email;
-//        this.password = password;
-//        this.group.setId();
-////        this.status = new Status("Учится");
-////        this.group = new Group("Эльфийский");
-//    }
 
     public Contact(){}
 

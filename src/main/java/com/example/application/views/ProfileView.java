@@ -18,6 +18,8 @@ import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
 import com.vaadin.flow.theme.lumo.LumoUtility;
 import jakarta.annotation.security.PermitAll;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 
 @PermitAll
 @Route(value = "profile", layout = MainLayout.class) // <1>
@@ -28,13 +30,17 @@ public class ProfileView extends VerticalLayout {
     private final String firstName = "Золтан";
     private final String lastName = "Хивай";
 
-
+    private final InMemoryUserDetailsManager userDetailsManager;
     private final String name = "Золтан Хивай";
     private final String email = "zhivai@cirilla.gif";
     private final String bio = "Я думал меня ждут горячий окорок, холодное пиво. А тут - учеба.";
 
-    public ProfileView(CrmService service) {
+    @Autowired
+    public ProfileView(CrmService service, InMemoryUserDetailsManager inMemoryUserDetailsManager) {
         this.service = service;
+        this.userDetailsManager = inMemoryUserDetailsManager;
+
+
         // Create a header label
         Label header = new Label("Профиль");
         header.getStyle().set("font-size", "24px");

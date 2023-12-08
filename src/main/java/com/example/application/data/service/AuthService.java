@@ -1,27 +1,17 @@
 package com.example.application.data.service;
 
 import com.example.application.data.entity.Role;
-//import com.example.application.data.entity.User;
-import com.example.application.data.entity.Contact;
-
-import com.example.application.data.repository.ContactRepository;
-//import com.example.application.views.admin.AdminView;
-//import com.example.application.views.home.HomeView;
-//import com.example.application.views.logout.LogoutView;
-//import com.example.application.views.main.MainView;
+import com.example.application.data.repository.UserRepository;
+import com.example.application.views.DashboardView;
+import com.example.application.views.MainLayout;
+import com.example.application.views.list.ListView;
 import com.vaadin.flow.component.Component;
 import com.vaadin.flow.router.RouteConfiguration;
-import com.vaadin.flow.server.VaadinSession;
-//import org.springframework.mail.MailSender;
-//import org.springframework.mail.SimpleMailMessage;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Bean;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.PostMapping;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -32,23 +22,45 @@ public class AuthService {
     public record AuthorizedRoute(String route, String name, Class<? extends Component> view) {
 
     }
-
     public class AuthException extends Exception {
+    }
+    private final UserRepository userRepository;
 
+    public AuthService(UserRepository userRepository) {
+        this.userRepository = userRepository;
     }
 
-    private final ContactRepository contactRepository;
-
-    public AuthService(ContactRepository contactRepository) {
-        this.contactRepository = contactRepository;
+    public void authenticate(String username, String password) throws AuthException {
+        com.example.application.data.entity.User user = userRepository.getByUsername(username);
+        if(user != null && user.checkPassword(password)) {
+            createRoutes(user.getRole());
+        } else {
+            throw new AuthException();
+        }
     }
 
-//    @Autowired
+    private void createRoutes(Role role) {
+        getAuthorizedRoutes(role).stream().
+                forEach(route ->
+                        RouteConfiguration.forSessionScope().setRoute(route.route, route.view, MainLayout.class));
+    }
+
+    public List<AuthorizedRoute> getAuthorizedRoutes(Role role) {
+        ArrayList<AuthorizedRoute> routes = new ArrayList<>();
+
+        if(role.equals(Role.USER)) {
+            routes.add(new AuthorizedRoute("", "Самореклама!", DashboardView.class));
+        } else if (role.equals(Role.ADMIN)) {
+            routes.add(new AuthorizedRoute("", "Самореклама!", DashboardView.class));
+            routes.add(new AuthorizedRoute("students", "Студенты!", ListView.class));
+        }
+
+        return routes;
+    }
+
     private InMemoryUserDetailsManager userDetailsManager;
 
-    //@PostMapping("/register")
     public UserDetailsService register(String firstName, String lastName, String email, String password) {
-        //Contact contact = contactRepository.save(new Contact(firstName, lastName, email, password, Role.USER));
         UserDetails newUser = User.builder()
                 .username(email)
                 .password(password)

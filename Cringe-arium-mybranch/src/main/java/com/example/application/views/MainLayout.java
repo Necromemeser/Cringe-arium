@@ -31,7 +31,6 @@ public class MainLayout extends AppLayout {
         logoLink.setTabIndex(-1); // Если вы хотите, чтобы logo не фокусировался при навигации с клавиатуры
         logoLink.getStyle().set("text-decoration", "none");
 
-
         String u = securityService.getAuthenticatedUser().getUsername();
         Button logout = new Button("Выйти " + u, e -> securityService.logout());
 

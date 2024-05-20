@@ -153,17 +153,24 @@
     <build>
         <defaultGoal>spring-boot:run</defaultGoal>
         <plugins>
-<!--            <plugin>-->
-<!--                <groupId>org.springframework.boot</groupId>-->
-<!--                <artifactId>spring-boot-maven-plugin</artifactId>-->
-<!--                &lt;!&ndash; Clean build and startup time for Vaadin apps sometimes may exceed-->
-<!--                     the default Spring Boot's 30sec timeout.  &ndash;&gt;-->
-<!--                <configuration>-->
-<!--                    <jvmArguments>-Xdebug -Xrunjdwp:transport=dt_socket,server=y,suspend=n,address=5895</jvmArguments>-->
-<!--                    <wait>500</wait>-->
-<!--                    <maxAttempts>240</maxAttempts>-->
-<!--                </configuration>-->
-<!--            </plugin>-->
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+                <configuration>
+                    <!-- Clean build and startup time for Vaadin apps sometimes may exceed
+                         the default Spring Boot's 30sec timeout. -->
+                    <jvmArguments>-Xdebug -Xrunjdwp:transport=dt_socket,server=y,suspend=n,address=*:5895</jvmArguments>
+                    <wait>500</wait>
+                    <maxAttempts>240</maxAttempts>
+                </configuration>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>repackage</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
 
             <plugin>
                 <groupId>com.vaadin</groupId>
@@ -177,6 +184,7 @@
                     </execution>
                 </executions>
             </plugin>
+
         </plugins>
     </build>
 
